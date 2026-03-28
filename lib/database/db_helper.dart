@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:task_management_app/models/project.dart';
-
 import '../models/task.dart';
 
 class DbHelper {
@@ -76,12 +75,12 @@ class DbHelper {
 
   // Task CRUD
 
-  Future<int> insertTask(Task task) async {
+  static  Future<int> insertTask(Task task) async {
     final db = await database;
     return await db.insert('tasks', task.toMap());
   }
 
-  Future<List<Task>> getTasksByProject(int projectId) async {
+  static Future<List<Task>> getTasksByProject(int projectId) async {
     final db = await database;
     final maps = await db.query(
       'tasks',
@@ -92,7 +91,7 @@ class DbHelper {
     return maps.map((map) => Task.fromMap(map)).toList();
   }
 
-  Future<int> updateTask(Task task) async {
+  static Future<int> updateTask(Task task) async {
     final db = await database;
     return await db.update(
       'tasks',
@@ -102,12 +101,12 @@ class DbHelper {
     );
   }
 
-  Future<int> deleteTask(int id) async {
+  static Future<int> deleteTask(int id) async {
     final db = await database;
     return await db.delete('tasks', where: 'id = ?', whereArgs: [id]);
   }
 
-  Future<int> toggleTask(int id, int currentStatus) async {
+  static Future<int> toggleTask(int id, int currentStatus) async {
     final db = await database;
     return await db.update(
       'tasks',
